@@ -1,11 +1,19 @@
-import pandas
+import pandas as pd
 import pandasql
 import csv
 import urllib2
+import os
+
+cwd = os.getcwd()
+os.chdir('%s\\Intro Data Science\\Problem Set 2' %(cwd))
+
+#################################################################
+##################### Problem Set #2 ############################
+#################################################################
 
 def num_rainy_days(filename):
 
-    weather_data = pandas.read_csv(filename)
+    weather_data = pd.read_csv(filename)
 
     q = "SELECT COUNT(*) FROM weather_data WHERE rain=1"
 
@@ -17,7 +25,7 @@ print num_rainy_days('weather_underground.csv')
 
 def max_temp_aggregate_by_fog(filename):
 
-    weather_data = pandas.read_csv(filename)
+    weather_data = pd.read_csv(filename)
 
     q = 'SELECT fog, MAX(maxtempi) FROM weather_data GROUP BY fog'
 
@@ -28,7 +36,7 @@ print max_temp_aggregate_by_fog('weather_underground.csv')
 
 def avg_weekend_temperature(filename):
 
-    weather_data = pandas.read_csv(filename)
+    weather_data = pd.read_csv(filename)
 
     q = "select AVG(meantempi) from weather_data WHERE cast(strftime('%w',date) as integer) in (0,6)"
 
@@ -39,7 +47,7 @@ print avg_weekend_temperature('weather_underground.csv')
 
 def avg_min_temperature(filename):
 
-    weather_data = pandas.read_csv(filename)
+    weather_data = pd.read_csv(filename)
 
     q = "SELECT AVG(mintempi) from weather_data WHERE rain=1 AND mintempi>55"
 
@@ -105,7 +113,7 @@ create_master_turnstile_file(['updated_test.txt'],'output.txt')
 
 def filter_by_regular(filename):
 
-    turnstile_data = pandas.read_csv(filename)
+    turnstile_data = pd.read_csv(filename)
     turnstile_data = turnstile_data[turnstile_data.DESCn=='REGULAR']
 
     return turnstile_data
@@ -137,3 +145,4 @@ def reformat_subway_dates(date):
     date_formatted = '20%s-%s-%s' %(date[-2:],date[:2],date[3:5])
 
     return date_formatted
+
